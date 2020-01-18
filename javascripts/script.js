@@ -65,7 +65,7 @@ var creationThis = null;
 function preload ()
 {
 
-    this.load.spritesheet('cow', "images/assets/sprites/cow/spritesheet-cow.png", {frameWidth: 32, frameHeight: 32})
+    this.load.spritesheet('cow', "./images/assets/sprites/cow/spritesheet-cow.png", {frameWidth: 32, frameHeight: 32})
 }
 
 function create ()
