@@ -189,7 +189,7 @@ function preload() {
 
 function create() {
   creationThis = this;
-  createNPC(creationThis, "BOB");
+  createNPC(creationThis, "Moo Moo");
 }
 
 function createNPC(method, name) {

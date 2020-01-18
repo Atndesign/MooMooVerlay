@@ -26,8 +26,15 @@ ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
             viewersJson.viewers.push({name:user});
         }
     }
-  }
-  ComfyJS.Init( "Atndesign" );
+}
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+  ComfyJS.Init( getUrlVars()["channel"] );
   
     
     
@@ -64,7 +71,7 @@ function preload ()
 function create ()
 {
     creationThis = this;
-    createNPC(creationThis, "BOB");
+    createNPC(creationThis, "Moo Moo");
 }
 
 
