@@ -126,9 +126,14 @@ var viewersJson = {
 ComfyJS.onCommand = function (user, command, message, flags, extra) {
   if (command === "play") {
     var canSpawn = true;
+    console.log(viewersJson);
+    console.log(user);
 
     if (viewersJson.viewers.length < 1) {
-      createNpc(creationThis, user);
+      createNPC(creationThis, user);
+      viewersJson.viewers.push({
+        name: user
+      });
       return;
     }
 
@@ -140,20 +145,15 @@ ComfyJS.onCommand = function (user, command, message, flags, extra) {
     });
 
     if (canSpawn) {
-      createNpc(creationThis, user);
+      createNPC(creationThis, user);
+      viewersJson.viewers.push({
+        name: user
+      });
     }
   }
 };
 
-ComfyJS.Init("Atndesign");
-
-function createNpc(username) {
-  viewersJson.viewers.push({
-    name: username
-  });
-  createNPC(creationThis, username);
-} //Game part
-
+ComfyJS.Init("Atndesign"); //Game part
 
 var config = {
   type: Phaser.AUTO,
@@ -293,7 +293,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "12843" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "13269" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

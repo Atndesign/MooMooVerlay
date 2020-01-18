@@ -8,9 +8,12 @@ var viewersJson = {
 ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
     if( command === "play" ) {
       var canSpawn = true;
-        if(viewersJson.viewers.length < 1){
-          createNpc(creationThis,user)
-          return
+      console.log(viewersJson)
+      console.log(user)
+      if(viewersJson.viewers.length < 1){
+            createNPC(creationThis,user)
+            viewersJson.viewers.push({name:user});
+            return
         }
         viewersJson.viewers.forEach(element => {
             if(element.name == user){
@@ -19,16 +22,14 @@ ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
             }
         });
         if(canSpawn){
-          createNpc(creationThis,user)
+            createNPC(creationThis,user)
+            viewersJson.viewers.push({name:user});
         }
     }
   }
   ComfyJS.Init( "Atndesign" );
   
-  function createNpc(username){
-    viewersJson.viewers.push({name:username});
-    createNPC(creationThis, username);
-  }
+    
     
 //Game part
 var config = {
