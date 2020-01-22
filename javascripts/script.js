@@ -8,8 +8,6 @@ var viewersJson = {
 ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
     if( command === "play" ) {
       var canSpawn = true;
-      console.log(viewersJson)
-      console.log(user)
       if(viewersJson.viewers.length < 1){
             createNPC(creationThis,user)
             viewersJson.viewers.push({name:user});
