@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"dist/javascripts/script.js":[function(require,module,exports) {
+})({"javascripts/script.js":[function(require,module,exports) {
 //Twitch part
 var viewersJson = {
   "viewers": [{}]
@@ -126,14 +126,13 @@ var viewersJson = {
 ComfyJS.onCommand = function (user, command, message, flags, extra) {
   if (command === "play") {
     var canSpawn = true;
-    console.log(viewersJson);
-    console.log(user);
 
     if (viewersJson.viewers.length < 1) {
       createNPC(creationThis, user);
       viewersJson.viewers.push({
         name: user
       });
+      console.log("Appear");
       return;
     }
 
@@ -153,13 +152,22 @@ ComfyJS.onCommand = function (user, command, message, flags, extra) {
   }
 };
 
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+    vars[key] = value;
+  });
+  return vars;
+} //   ComfyJS.Init( getUrlVars()["channel"] );
+
+
 ComfyJS.Init("Atndesign"); //Game part
 
 var config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
-  // transparent: true,
+  transparent: true,
   physics: {
     default: 'arcade',
     arcade: {
@@ -179,9 +187,19 @@ var npcs = [];
 var moveCooldown = 80;
 var jumpCooldown = 200;
 var creationThis = null;
+var sprites = ["cow", "horse", "chicken"];
+var animations = ["walkcow", "walkhorse", "walkchicken"];
 
 function preload() {
-  this.load.spritesheet('cow', "images/assets/sprites/cow/spritesheet-cow.png", {
+  this.load.spritesheet('cow', "./images/assets/sprites/cow/spritesheet-cow.png", {
+    frameWidth: 32,
+    frameHeight: 32
+  });
+  this.load.spritesheet('horse', "./images/assets/sprites/horse/horse.png", {
+    frameWidth: 32,
+    frameHeight: 32
+  });
+  this.load.spritesheet('chicken', "./images/assets/sprites/chicken/chick.png", {
     frameWidth: 32,
     frameHeight: 32
   });
@@ -193,9 +211,10 @@ function create() {
 }
 
 function createNPC(method, name) {
-  var npc = method.physics.add.sprite(400, 100, 'cow', 0);
+  var npc = method.physics.add.sprite(400, 100, pickRandomSprite().sprites, 0);
+  console.log(npc);
   method.anims.create({
-    key: "walk",
+    key: "walkcow",
     frameRate: 5,
     repeat: -1,
     frames: method.anims.generateFrameNumbers('cow', {
@@ -203,10 +222,28 @@ function createNPC(method, name) {
       end: 2
     })
   });
+  method.anims.create({
+    key: "walkchicken",
+    frameRate: 3,
+    repeat: -1,
+    frames: method.anims.generateFrameNumbers('chicken', {
+      start: 0,
+      end: 1
+    })
+  });
+  method.anims.create({
+    key: "walkhorse",
+    frameRate: 5,
+    repeat: -1,
+    frames: method.anims.generateFrameNumbers('horse', {
+      start: 0,
+      end: 2
+    })
+  });
   npc.setVelocity(100, 200);
   npc.setBounce(1, 0);
   npc.setCollideWorldBounds(true);
-  npc.play("walk");
+  npc.play(pickRandomSprite().animation);
   var text = method.add.text(npc.x - 10, npc.y, name, {
     fontFamily: '"Roboto"'
   });
@@ -265,7 +302,15 @@ function jump(obj) {
     obj.npc.setVelocity(0, -200);
   }
 }
-},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+function pickRandomSprite() {
+  var rand = Math.floor(Math.random() * sprites.length);
+  return {
+    sprites: sprites[rand],
+    animation: animations[rand]
+  };
+}
+},{}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -293,7 +338,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "13269" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "14615" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -469,5 +514,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dist/javascripts/script.js"], null)
-//# sourceMappingURL=/script.8133995f.js.map
+},{}]},{},["../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","javascripts/script.js"], null)
+//# sourceMappingURL=/script.e0c41d2c.js.map
