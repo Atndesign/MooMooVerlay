@@ -29,7 +29,6 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
     });
   }
   update() {
-    console.log(this.text.x);
     this.text.x = this.x - this.text.displayWidth / 2;
     this.text.y = this.y - 35;
   }
