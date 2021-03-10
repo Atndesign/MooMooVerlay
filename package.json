@@ -1,20 +1,33 @@
 {
-  "name": "twitchoverlay",
-  "version": "0.0.0",
-  "private": true,
+  "name": "phaser-parcel",
+  "version": "1.0.0",
+  "description": "A Phaser 3 game template using Parcel bundler",
+  "main": "src/index.html",
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "nodemon .bin/www"
+    "build": "parcel build src/index.html --public-url ./ --experimental-scope-hoisting --no-source-maps",
+    "watch": "parcel watch src/index.html",
+    "start": "parcel serve src/index.html",
+    "clean": "rm -v dist/*",
+    "test": "npx eslint src"
   },
+  "keywords": [
+    "phaser",
+    "phaser3",
+    "phaser-boilerplate"
+  ],
+  "author": "samme",
+  "license": "ISC",
   "dependencies": {
-    "comfy.js": "^1.0.14",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "ejs": "~2.5.7",
-    "http-errors": "~1.6.2",
-    "morgan": "~1.9.0",
-    "nodemon": "^2.0.2",
-    "socket.io": "^2.3.0",
-    "tmi.js": "^1.5.0"
+    "phaser": "^3.20.1"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "eslint": "^5.16.0",
+    "eslint-config-semistandard": "^13.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0"
   }
 }
