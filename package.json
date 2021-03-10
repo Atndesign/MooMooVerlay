@@ -8,7 +8,9 @@
     "watch": "parcel watch src/index.html",
     "start": "parcel serve src/index.html",
     "clean": "rm -v dist/*",
-    "test": "npx eslint src"
+    "test": "npx eslint src",
+    "predeploy": "rm -rf dist && parcel build index.html --public-url MooMooVerlay",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [
     "phaser",
@@ -31,6 +33,7 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "gh-pages": "^3.1.0"
   }
 }

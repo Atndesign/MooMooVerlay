@@ -92,7 +92,7 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
   jump() {
     var rand = Math.random();
     if (rand > 0.5) {
-      this.setVelocity(0, -200);
+      this.setVelocity(this.velocityX, -200);
     }
     return;
   }

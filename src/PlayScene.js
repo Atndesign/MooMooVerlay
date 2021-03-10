@@ -28,12 +28,6 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    for (let index = 0; index < 5; index++) {
-      this.viewers.push(new Moo(this, "userName"));
-      this.viewersJson.viewers.push({
-        name: "userName",
-      });
-    }
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
       if (command === "play") {
         var canSpawn = true;
@@ -58,9 +52,6 @@ export default class PlayScene extends Phaser.Scene {
       });
       let index = values.indexOf(user);
       if (index >= 0) {
-        console.log(index);
-        console.log(this.viewers);
-        console.log(this.viewers[index]);
         this.viewers[index - 1].displayChatText(message);
       }
     };
