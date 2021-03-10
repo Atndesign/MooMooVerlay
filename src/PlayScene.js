@@ -9,7 +9,7 @@ export default class PlayScene extends Phaser.Scene {
       physics: {
         arcade: {
           gravity: { y: 300 },
-          debug: false,
+          debug: true,
         },
       },
     });
@@ -23,8 +23,12 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    const moo = new Moo(this);
+    this.viewers.push(new Moo(this, "Lorem"));
   }
 
-  update() {}
+  update() {
+    this.viewers.forEach((viewer) => {
+      viewer.update();
+    });
+  }
 }
