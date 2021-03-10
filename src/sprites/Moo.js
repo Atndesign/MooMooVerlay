@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Moo extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, name = "") {
-    var x = 50;
+    var x = Math.floor(Math.random() * innerWidth);
     var y = 100;
     super(scene, x, y, "cow");
     scene.add.existing(this);
