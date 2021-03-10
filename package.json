@@ -19,6 +19,8 @@
   "license": "ISC",
   "dependencies": {
     "assets": "^3.0.1",
+    "comfy.js": "^1.1.6",
+    "matter": "^0.2.0",
     "phaser": "^3.20.1"
   },
   "devDependencies": {
