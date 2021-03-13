@@ -28,6 +28,7 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    this.viewers.push(new Moo(this, "MooMoo"));
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
       if (command === "play") {
         var canSpawn = true;

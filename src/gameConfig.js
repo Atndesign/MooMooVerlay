@@ -6,7 +6,7 @@ export default {
   width: 800,
   height: 600,
   title: "Phaser 3 with Parcel 📦",
-  transparent: true,
+  // transparent: true,
   url: "https://github.com/samme/phaser-parcel",
   banner: {
     text: "white",
