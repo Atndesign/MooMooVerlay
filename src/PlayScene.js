@@ -35,11 +35,6 @@ export default class PlayScene extends Phaser.Scene {
       this.viewers.push(new Moo(this, "MooMoo"));
     }
 
-    setTimeout(() => {
-      this.viewers.forEach((viewer) => {
-        viewer.makeEmBig();
-      });
-    }, 5000);
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
       if (command === "play") {
         var canSpawn = true;
@@ -56,6 +51,14 @@ export default class PlayScene extends Phaser.Scene {
           this.viewersJson.viewers.push({ name: user });
           return;
         }
+      }
+      if (command === "moobig") {
+        this.viewers.forEach((viewer) => {
+          viewer.makeEmBig();
+        });
+      }
+      if (command === "bounce") {
+        this.enableDrop();
       }
     };
     ComfyJS.onChat = (user, message, flags, extra) => {

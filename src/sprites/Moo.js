@@ -42,6 +42,7 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
     this.play("walk");
     this.isDead = false;
     this.tint = 0xffffff;
+    this.isBig = false;
   }
 
   displayText() {
@@ -221,6 +222,7 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
 
   makeEmBig() {
     if (!this.isBig) {
+      this.isBig = true;
       this.scene.tweens.add(
         {
           targets: this,
@@ -245,6 +247,9 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
           500
         );
       }, 1500);
+      setTimeout(() => {
+        this.isBig = false;
+      }, 15000);
     }
   }
 }
