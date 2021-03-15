@@ -14,7 +14,10 @@ export default class PlayScene extends Phaser.Scene {
         },
       },
     });
+    this.gameModes = ["avatar", "drop"];
+    this.currentGameMode = this.gameModes[0];
     this.viewers = [];
+    this.contestants = [];
     this.viewersJson = {
       viewers: [{}],
     };
@@ -28,7 +31,13 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.viewers.push(new Moo(this, "MooMoo"));
+    for (let nbr = 0; nbr < 10; nbr++) {
+      this.viewers.push(new Moo(this, "MooMoo"));
+    }
+
+    setTimeout(() => {
+      this.enableDrop();
+    }, 5000);
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
       if (command === "play") {
         var canSpawn = true;
@@ -76,6 +85,46 @@ export default class PlayScene extends Phaser.Scene {
   update() {
     this.viewers.forEach((viewer, index) => {
       viewer.update();
+    });
+
+    if (this.currentGameMode === this.gameModes[1]) {
+      this.contestants.forEach((player, index) => {
+        player.update();
+        let indexToRemove = player.checkIfDead();
+
+        if (indexToRemove) {
+          if (index > -1 && this.contestants.length > 0) {
+            let players = this.contestants;
+            players.splice(index, 1);
+          }
+          if (this.contestants.length <= 0) {
+            this.add.text(
+              800 / 2,
+              600 / 2,
+              `The winner is ${player.getName()}`,
+              {
+                fontFamily: '"Roboto"',
+                align: "center",
+              }
+            );
+            player.tint = 0x00ff00;
+            setTimeout(() => {
+              this.currentGameMode = this.gameModes[0];
+            });
+          }
+        }
+      });
+    }
+  }
+
+  enableDrop() {
+    this.viewers.forEach((viewer) => {
+      this.contestants.push(viewer);
+    });
+    this.currentGameMode = this.gameModes[1];
+    this.viewers.forEach((viewer) => {
+      viewer.changeGameMode(1);
+      viewer.startDrop(Math.floor(Math.random() * 800), 0);
     });
   }
 }

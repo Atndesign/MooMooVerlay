@@ -23,14 +23,21 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
     this.moveCooldown = this.moveCooldownReset;
     this.jumpCoolDown = this.jumpCoolDownReset;
     this.canDisplayMsg = true;
-
+    this.gameModes = ["avatar", "drop"];
+    this.currentGameMode = this.gameModes[0];
+    this.dropStarted = false;
     this.setVelocity(this.velocityX, this.velocityY);
     this.setBounce(1, 0);
     this.setCollideWorldBounds(true);
     this.play("walk");
-    this.name = "";
+    this.isDead = false;
     this.name = name;
-    this.text = scene.add.text(this.x - 10, this.y, name, {
+    this.displayText();
+  }
+
+  //Avatar part
+  displayText() {
+    this.text = this.scene.add.text(this.x - 10, this.y, this.name, {
       fontFamily: '"Roboto"',
       align: "center",
       fill: "white",
@@ -59,22 +66,30 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
     this.msgTriangle.setAlpha(0);
   }
   update() {
+    if (this.currentGameMode === this.gameModes[0]) {
+      this.moveCooldown = this.cooldown(
+        this.moveCooldown,
+        this.moveCooldownReset,
+        "velocity"
+      );
+      this.jumpCoolDown = this.cooldown(
+        this.jumpCoolDown,
+        this.jumpCoolDownReset,
+        "jump"
+      );
+    } else if (this.currentGameMode === this.gameModes[1] && this.dropStarted) {
+      this.body.velocity.x = this.body.velocity.x -= 1;
+      this.isStillInMovement();
+    }
+    this.messageMoveWithSprite();
+  }
+  messageMoveWithSprite() {
     this.text.x = this.x - this.text.displayWidth / 2;
     this.text.y = this.y - 35;
     if (this.msg !== null || this.msg !== undefined) {
       this.msg.x = this.x - this.msg.displayWidth / 2;
       this.msg.y = this.y - 35 - this.msg.displayHeight;
     }
-    this.moveCooldown = this.cooldown(
-      this.moveCooldown,
-      this.moveCooldownReset,
-      "velocity"
-    );
-    this.jumpCoolDown = this.cooldown(
-      this.jumpCoolDown,
-      this.jumpCoolDownReset,
-      "jump"
-    );
     this.msgTriangle.setX(this.msg.x + this.msg.displayWidth / 2 + 10);
     this.msgTriangle.setY(this.text.y);
   }
@@ -149,5 +164,45 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
         this.canDisplayMsg = true;
       }, 5000);
     }
+  }
+  changeGameMode(gameModeIndex) {
+    this.currentGameMode = this.gameModes[gameModeIndex];
+  }
+
+  //Drop part
+  startDrop(x, y) {
+    this.dropStarted = true;
+    this.changeGameMode(1);
+    this.x = x;
+    this.y = y;
+    this.ChooseNewVelocity();
+    this.setBounce(1, 1);
+    this.body.setDrag(10 + Math.floor(Math.random() * 25));
+  }
+
+  ChooseNewVelocity() {
+    this.body.velocity.x = 500;
+    this.body.velocity.y = -500;
+  }
+
+  isStillInMovement() {
+    if (Math.floor(this.body.velocity.x) === 0) {
+      this.setVelocity(0, 0);
+      this.tint = 0xff0000;
+      this.body.setDrag(0);
+      this.isDead = true;
+    }
+  }
+  checkIfDead() {
+    if (this.isDead) {
+      this.setBounce(1, 0);
+      if (this.y < 600 && this.y > 500) {
+        this.setVelocity(0, 0);
+      }
+      return true;
+    }
+  }
+  getName() {
+    return this.name;
   }
 }
