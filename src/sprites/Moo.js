@@ -16,6 +16,16 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
         end: 2,
       }),
     });
+    this.name = name;
+    this.initState();
+    this.displayText();
+  }
+
+  //Avatar part
+  initState() {
+    (this.x = Math.floor(Math.random() * 800)), 0;
+    this.y = 0;
+    this.setDrag(0, 0);
     this.velocityX = 100;
     this.velocityY = 100;
     this.moveCooldownReset = 100 + Math.random() * 40;
@@ -31,11 +41,9 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
     this.play("walk");
     this.isDead = false;
-    this.name = name;
-    this.displayText();
+    this.tint = 0xffffff;
   }
 
-  //Avatar part
   displayText() {
     this.text = this.scene.add.text(this.x - 10, this.y, this.name, {
       fontFamily: '"Roboto"',
@@ -202,7 +210,41 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
       return true;
     }
   }
+
+  stopDrop() {
+    this.dropStarted = false;
+    this.initState();
+  }
   getName() {
     return this.name;
+  }
+
+  makeEmBig() {
+    if (!this.isBig) {
+      this.scene.tweens.add(
+        {
+          targets: this,
+          scaleX: 5,
+          scaleY: 5,
+          yoyo: false,
+          repeat: 0,
+          ease: "Sine.easeInOut",
+        },
+        500
+      );
+      setTimeout(() => {
+        this.scene.tweens.add(
+          {
+            targets: this,
+            scaleX: 1,
+            scaleY: 1,
+            yoyo: false,
+            repeat: 0,
+            ease: "Sine.easeInOut",
+          },
+          500
+        );
+      }, 1500);
+    }
   }
 }

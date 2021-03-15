@@ -36,7 +36,9 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     setTimeout(() => {
-      this.enableDrop();
+      this.viewers.forEach((viewer) => {
+        viewer.makeEmBig();
+      });
     }, 5000);
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
       if (command === "play") {
@@ -98,7 +100,7 @@ export default class PlayScene extends Phaser.Scene {
             players.splice(index, 1);
           }
           if (this.contestants.length <= 0) {
-            this.add.text(
+            const winText = this.add.text(
               800 / 2,
               600 / 2,
               `The winner is ${player.getName()}`,
@@ -110,13 +112,20 @@ export default class PlayScene extends Phaser.Scene {
             player.tint = 0x00ff00;
             setTimeout(() => {
               this.currentGameMode = this.gameModes[0];
-            });
+              this.reinitStates();
+              winText.destroy();
+            }, 1500);
           }
         }
       });
     }
   }
 
+  reinitStates() {
+    this.viewers.forEach((viewer) => {
+      viewer.stopDrop();
+    });
+  }
   enableDrop() {
     this.viewers.forEach((viewer) => {
       this.contestants.push(viewer);
