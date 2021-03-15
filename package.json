@@ -9,7 +9,7 @@
     "start": "parcel serve src/index.html",
     "clean": "rm -v dist/*",
     "test": "npx eslint src",
-    "predeploy": "rm -rf dist && parcel build index.html --public-url MooMooVerlay",
+    "predeploy": "rm -rf dist && parcel build src/index.html --public-url ./ MooMooVerlay",
     "deploy": "gh-pages -d dist"
   },
   "keywords": [
