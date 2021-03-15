@@ -31,9 +31,7 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    for (let nbr = 0; nbr < 10; nbr++) {
-      this.viewers.push(new Moo(this, "MooMoo"));
-    }
+    this.viewers.push(new Moo(this, "MooMoo"));
 
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
       if (command === "play") {
@@ -59,6 +57,8 @@ export default class PlayScene extends Phaser.Scene {
       }
       if (command === "bounce") {
         this.enableDrop();
+      }
+      if (command === "bounce") {
       }
     };
     ComfyJS.onChat = (user, message, flags, extra) => {
@@ -130,13 +130,15 @@ export default class PlayScene extends Phaser.Scene {
     });
   }
   enableDrop() {
-    this.viewers.forEach((viewer) => {
-      this.contestants.push(viewer);
-    });
-    this.currentGameMode = this.gameModes[1];
-    this.viewers.forEach((viewer) => {
-      viewer.changeGameMode(1);
-      viewer.startDrop(Math.floor(Math.random() * 800), 0);
-    });
+    if (this.currentGameMode !== this.gameModes[1]) {
+      this.viewers.forEach((viewer) => {
+        this.contestants.push(viewer);
+      });
+      this.currentGameMode = this.gameModes[1];
+      this.viewers.forEach((viewer) => {
+        viewer.changeGameMode(1);
+        viewer.startDrop(Math.floor(Math.random() * 800), 0);
+      });
+    }
   }
 }
