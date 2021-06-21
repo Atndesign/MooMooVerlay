@@ -10,7 +10,9 @@ This project also use **Comfy.JS**, who lets you integrate with Twitch chat for 
 
 ## Instafluff
 
-> https://github.com/instafluff > https://twitch.tv/instafluff
+> https://github.com/instafluff 
+
+> https://twitch.tv/instafluff
 
 ## Commands
 
