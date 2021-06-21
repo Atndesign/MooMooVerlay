@@ -226,8 +226,8 @@ export default class Moo extends Phaser.Physics.Arcade.Sprite {
       this.scene.tweens.add(
         {
           targets: this,
-          scaleX: 5,
-          scaleY: 5,
+          scaleX: 10,
+          scaleY: 10,
           yoyo: false,
           repeat: 0,
           ease: "Sine.easeInOut",

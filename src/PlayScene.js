@@ -32,24 +32,7 @@ export default class PlayScene extends Phaser.Scene {
 
   create() {
     this.viewers.push(new Moo(this, "MooMoo"));
-
-    ComfyJS.onCommand = (user, command, message, flags, extra) => {
-      if (command === "play") {
-        var canSpawn = true;
-        if (this.viewersJson.viewers.length < 1) {
-          canSpawn = true;
-        }
-        this.viewersJson.viewers.forEach((element) => {
-          if (element.name == user) {
-            canSpawn = false;
-          }
-        });
-        if (canSpawn) {
-          this.createViewer(user);
-          this.viewersJson.viewers.push({ name: user });
-          return;
-        }
-      }
+    ComfyJS.onCommand = (user, command) => {
       if (command === "moobig") {
         this.viewers.forEach((viewer) => {
           viewer.makeEmBig();
@@ -61,13 +44,28 @@ export default class PlayScene extends Phaser.Scene {
       if (command === "bounce") {
       }
     };
-    ComfyJS.onChat = (user, message, flags, extra) => {
+
+    ComfyJS.onChat = (user, message) => {
       var values = this.viewersJson.viewers.map(function (o) {
         return o.name;
       });
       let index = values.indexOf(user);
       if (index >= 0) {
-        this.viewers[index - 1].displayChatText(message);
+        this.viewers[index].displayChatText(message);
+      }
+      var canSpawn = true;
+      if (this.viewersJson.viewers.length < 1) {
+        canSpawn = true;
+      }
+      this.viewersJson.viewers.forEach((element) => {
+        if (element.name == user) {
+          canSpawn = false;
+        }
+      });
+      if (canSpawn) {
+        this.createViewer(user);
+        this.viewersJson.viewers.push({ name: user });
+        return;
       }
     };
   }
