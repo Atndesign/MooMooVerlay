@@ -4,6 +4,8 @@ import Moo from "./sprites/Moo.js";
 import cowTiletSheet from "/assets/spritesheet-cow.png";
 
 export default class PlayScene extends Phaser.Scene {
+  viewers: Array = [];
+
   constructor() {
     super({
       key: "play",
@@ -16,13 +18,15 @@ export default class PlayScene extends Phaser.Scene {
     });
     this.gameModes = ["avatar", "drop"];
     this.currentGameMode = this.gameModes[0];
-    this.viewers = [];
+
+    this.viewers: Array = [];
     this.contestants = [];
     this.viewersJson = {
       viewers: [{}],
     };
     ComfyJS.Init(this.getUrlVars()["channel"]);
   }
+
   preload() {
     this.load.spritesheet("cow", cowTiletSheet, {
       frameWidth: 32,
