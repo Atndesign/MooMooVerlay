@@ -14,7 +14,7 @@ class GameScene extends Phaser.Scene {
       physics: {
         arcade: {
           gravity: { y: 300 },
-          debug: true,
+          debug: false,
         },
       },
     });
@@ -27,6 +27,9 @@ class GameScene extends Phaser.Scene {
   }
   public create(): void {
     this.createAViewer("Atn");
+    this.createAViewer("Spanky");
+    this.createAViewer("Anami");
+    this.createAViewer("Smile");
   }
   public getUrlVar(): Array<Number> {
     return [];
@@ -34,7 +37,11 @@ class GameScene extends Phaser.Scene {
   public createAViewer(username: String): void {
     this.viewers.push(new Viewer(username, this));
   }
-  public update(): void {}
+  public update(): void {
+    this.viewers.forEach((viewer) => {
+      viewer.update();
+    });
+  }
   public reinitStates(): void {}
   public toggleGameMode(gamemode: GameMode): void {}
 }

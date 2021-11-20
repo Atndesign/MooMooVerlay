@@ -42,7 +42,9 @@ class Viewer {
 
   public displayAmessage(): void {}
 
-  public update(): void {}
+  public update(): void {
+    this._avatar.update();
+  }
 }
 
 export default Viewer;
