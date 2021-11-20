@@ -8,12 +8,13 @@ class Sprite extends Phaser.Physics.Arcade.Sprite {
   private velocityY: number = 100;
   private msg;
   private text;
-  private canDisplayMsg: boolean;
+  private canDisplayMsg: boolean = true;
   private msgTriangle;
   private jumpCoolDownReset: number;
   private moveCooldown: number;
   private jumpCoolDown: number;
   private moveCooldownReset: number;
+  isBig: any;
   //@ts-ignore
   constructor(scene: GameScene, userName: string) {
     const x = Math.floor(Math.random() * innerWidth);
@@ -66,7 +67,6 @@ class Sprite extends Phaser.Physics.Arcade.Sprite {
     this.moveCooldown = this.moveCooldownReset;
     this.jumpCoolDown = this.jumpCoolDownReset;
     this.displayText();
-    this.displayChattext("Hello world !");
   }
   public displayText(): void {
     this.text = this.scene.add.text(this.x - 10, this.y, this._userName, {
@@ -154,7 +154,33 @@ class Sprite extends Phaser.Physics.Arcade.Sprite {
       return (timer -= 1);
     }
   }
-  public displayChattext(text: String): void {
+  public makeEmBig(): void {
+    if (!this.isBig) {
+      this.isBig = true;
+      this.scene.tweens.add({
+        targets: this,
+        scaleX: 10,
+        scaleY: 10,
+        yoyo: false,
+        repeat: 0,
+        ease: "Sine.easeInOut",
+      });
+      setTimeout(() => {
+        this.scene.tweens.add({
+          targets: this,
+          scaleX: 1,
+          scaleY: 1,
+          yoyo: false,
+          repeat: 0,
+          ease: "Sine.easeInOut",
+        });
+      }, 1500);
+      setTimeout(() => {
+        this.isBig = false;
+      }, 15000);
+    }
+  }
+  public displayChatText(text: String): void {
     if (this.canDisplayMsg) {
       this.canDisplayMsg = false;
       this.scene.tweens.add({

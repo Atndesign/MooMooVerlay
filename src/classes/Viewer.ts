@@ -7,7 +7,7 @@ class Viewer {
   private _xPosition: Number;
   private _yPosition: Number;
 
-  constructor(username: String, scene: GameScene) {
+  constructor(username: string, scene: GameScene) {
     this._username = username;
     this._avatar = new Sprite(scene, username);
   }
@@ -40,7 +40,13 @@ class Viewer {
     this._yPosition = y;
   }
 
-  public displayAmessage(): void {}
+  public displayAmessage(message: String): void {
+    this._avatar.displayChatText(message);
+  }
+
+  public makeEmBig(): void {
+    this._avatar.makeEmBig();
+  }
 
   public update(): void {
     this._avatar.update();
