@@ -1,14 +1,30 @@
 import Phaser, { Scene } from "phaser";
 import GameScene from "./GameScene";
 class Sprite extends Phaser.Physics.Arcade.Sprite {
-  private _spriteX: integer;
-  private _spriteY: integer;
+  private _spriteX: integer = 50;
+  private _spriteY: integer = 50;
   private _userName: String;
+  private _velocityX: number;
+  private _velocityY: number;
 
+  //@ts-ignore
   constructor(scene: GameScene, userName: String) {
     const x = Math.floor(Math.random() * innerWidth);
     const y = 100;
     super(scene, x, y, "cow");
+    scene.add.existing(this);
+    scene.physics.add.existing(this);
+    scene.anims.create({
+      key: "walk",
+      frameRate: 5,
+      duration: 5,
+      repeat: -1,
+      frames: scene.anims.generateFrameNumbers("cow", {
+        start: 0,
+        end: 2,
+      }),
+    });
+    this.initState();
     this._userName = userName;
   }
 
@@ -33,7 +49,12 @@ class Sprite extends Phaser.Physics.Arcade.Sprite {
 
   //   Methods
 
-  public initState(): void {}
+  public initState(): void {
+    this.setVelocity(150, 50);
+    this.setBounce(1, 0);
+    this.setCollideWorldBounds(true);
+    this.play("walk");
+  }
   public displayText(): void {}
   public update(): void {}
   public messageMoveWithSprite(): void {}

@@ -1,3 +1,4 @@
+import GameScene from "./GameScene";
 import Sprite from "./Sprite";
 
 class Viewer {
@@ -6,9 +7,9 @@ class Viewer {
   private _xPosition: Number;
   private _yPosition: Number;
 
-  constructor(username: String, avatar: Sprite) {
+  constructor(username: String, scene: GameScene) {
     this._username = username;
-    this._avatar = avatar;
+    this._avatar = new Sprite(scene, username);
   }
 
   public get username(): String {

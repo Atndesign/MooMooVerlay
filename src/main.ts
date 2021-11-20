@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-import gameConfig from "./gameConfig.js";
+import gameConfig from "./gameConfig";
+import "./assets/spritesheet-cow.png";
 
 function newGame() {
   if (game) return;
